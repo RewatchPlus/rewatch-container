@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  api:
+    image: rewatch-api
+    build:
+      dockerfile: Dockerfile.dev
+      context: "~/container-rewatch/code/rewatch-api"
+    container_name: rewatch-api
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    expose:
+      - 80
+      - 443
+      - 3001
+    ports:
+      - 3001:3001
+    networks:
+      - rewatch_network
+    volumes:
+      - ~/container-rewatch/code/rewatch-api:/var/www/html/rewatch/api
+  front:
+    image: rewatch-app
+    build:
+      dockerfile: Dockerfile.dev
+      context: "~/container-rewatch/code/rewatch-app-front"
+    container_name: rewatch-app
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    expose:
+      - 80
+      - 443
+      - 3002
+    ports:
+      - 3002:3002
+    networks:
+      - rewatch_network
+    volumes:
+      - ~/container-rewatch/code/rewatch-app-front:/var/www/html/rewatch/app
+
+networks:
+  rewatch_network:
+    driver: bridge
