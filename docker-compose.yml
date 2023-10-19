@@ -3,10 +3,10 @@ version: '3.8'
 services:
   api:
     image: rewatch-api
+    container_name: rewatch-api
     build:
       dockerfile: Dockerfile.dev
       context: "~/container-rewatch/code/rewatch-api"
-    container_name: rewatch-api
     restart: unless-stopped
     security_opt:
       - no-new-privileges:true
@@ -22,10 +22,10 @@ services:
       - ~/container-rewatch/code/rewatch-api:/var/www/html/rewatch/api
   front:
     image: rewatch-app
+    container_name: rewatch-app
     build:
       dockerfile: Dockerfile.dev
       context: "~/container-rewatch/code/rewatch-app-front"
-    container_name: rewatch-app
     restart: unless-stopped
     security_opt:
       - no-new-privileges:true
